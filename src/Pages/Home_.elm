@@ -16,7 +16,7 @@ view =
             [ div
                 [ ]
                 [
-                    h1 [  ] [ oxo_pfp, span [ style "margin-left" "30vw", style "text-align" "right"] [ text "OxO Homepage"] ]
+                    h1 [ class "grid" ] [ oxo_pfp, span [ style "display" "block", style "margin" "auto"] [ text "OxO Homepage"] ]
                 ]
             ]
         ]
