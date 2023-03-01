@@ -1,13 +1,15 @@
 module Pages.Home_ exposing (Model, Msg, page)
 
+import Colours exposing (..)
 import Effect exposing (Effect)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Gen.Params.Home_ exposing (Params)
-import Gen.Route as Route exposing (Route)
 import Html exposing (Html)
+import Images exposing (..)
+import Layout exposing (layout)
 import Page
 import Request
 import Shared
@@ -72,70 +74,30 @@ subscriptions model =
 
 view : Model -> View Msg
 view model =
-    { title = ""
+    { title = "Dashboard"
     , body =
-        [ layout [ width fill, height fill ] <|
-            column [ width fill, height fill ]
-                [ header
-                , content
-                ]
+        [ Layout.layout content
         ]
     }
-
-
-header : Element msg
-header =
-    row [ width fill, padding 20, spacing 20, Font.color color.blue ]
-        [ logo
-        , link [ alignRight ] { url = Route.toHref Route.Ping, label = text "Ping" }
-        , link [ alignRight ] { url = Route.toHref Route.Ping, label = text "Songs" }
-        , link [ alignRight ] { url = Route.toHref Route.Ping, label = text "Settings" }
-        ]
 
 
 content : Element msg
 content =
-    row [ centerX, centerY, paddingXY 40 0 ] <|
-        {- this is fucking fancy css shit -}
-        [ image [ width <| maximum 600 fill, height shrink] { src = "./assets/oxo_pfp.png", description = "OXO Profilepicture" }
-        , paragraph
-            [ Font.size 48, Font.center, Font.color color.white ]
-            [ text "Sussy" ]
-        ]
-
-
-footer : Element msg
-footer =
-    row
-        [ width fill
-        , padding 10
-        , Background.color color.lightBlue
-        , Border.widthEach { top = 1, bottom = 0, left = 0, right = 0 }
-        , Border.color color.blue
-        ]
-        [ logo
-        , column [ alignRight, spacing 10 ]
-            [ el [ alignRight ] <| text "Services"
-            , el [ alignRight ] <| text "About"
-            , el [ alignRight ] <| text "Contact"
+    let
+        title_text =
+            [ "⛩️🌸🍥☯🍜"
+            , "Welcome to the"
+            , " OXO Dashboard!"
+            , "⛩️🌸🍥☯🍜"
             ]
+
+        title_el =
+            title_text
+                |> List.map (\txt -> el [ Font.center, width fill ] <| text txt)
+    in
+    row [ width fill, height fill, paddingXY 40 0, Font.size 48, Font.color color.white ] <|
+        {- this is fucking fancy css shit -}
+        [ column [ width (fill |> minimum 200 |> maximum 400), height shrink, alignLeft ]
+            [ image [ width fill, height fill ] { src = oxo_pfp_src, description = "OXO Profilepicture" } ]
+        , column [ width fill, alignRight ] title_el
         ]
-
-
-logo : Element msg
-logo =
-    el
-        [ width <| px 40
-        , height <| px 40
-        ]
-    <|
-        image [] { src = "./assets/oxo_pfp.png", description = "OXO Profilepicture" }
-
-
-color =
-    { blue = rgb255 0x72 0x9F 0xCF
-    , darkCharcoal = rgb255 0x2E 0x34 0x36
-    , lightBlue = rgb255 0xC5 0xE8 0xF7
-    , lightGrey = rgb255 0xE0 0xE0 0xE0
-    , white = rgb255 0xFF 0xFF 0xFF
-    }
